@@ -20,7 +20,7 @@ class SimpleCalculatorTest {
     }
 
     @Test
-    void throws_illegal_argument_exception_when_deviding_by_zero(){
+    void throws_illegal_argument_exception_when_dividing_by_zero(){
     }
 
 }

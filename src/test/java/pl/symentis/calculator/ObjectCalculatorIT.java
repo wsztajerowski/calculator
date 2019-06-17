@@ -20,7 +20,7 @@ class ObjectCalculatorIT {
     void add_one_to_three_returns_four(){
     }
 
-    void throws_illegal_argument_exception_when_deviding_by_zero(int value){
+    void throws_illegal_argument_exception_when_dividing_by_zero(int value){
     }
 
     void multiplication_of_two_numbers_with_same_sign_retuns_positive_number(int firstNumber, int secondNumber){

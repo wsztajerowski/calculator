@@ -38,7 +38,7 @@ public class ObjectCalculator {
 
     public ObjectCalculator divideBy(int value){
         if (value == 0){
-            throw new IllegalArgumentException("You cannot divideBy by zero!");
+            throw new IllegalArgumentException("You cannot divide by zero!");
         }
         currentValue /= value;
         return this;
