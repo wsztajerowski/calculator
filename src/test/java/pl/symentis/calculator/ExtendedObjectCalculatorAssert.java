@@ -30,4 +30,13 @@ public class ExtendedObjectCalculatorAssert extends AbstractAssert<ExtendedObjec
                 .isPositive();
         return this;
     }
+
+    public ExtendedObjectCalculatorAssert hasValue(int expectedValue) {
+        isNotNull();
+
+        Assertions.assertThat(actual.getCurrentValue())
+                .as("Checking calculator's value")
+                .isEqualTo(expectedValue);
+        return this;
+    }
 }
