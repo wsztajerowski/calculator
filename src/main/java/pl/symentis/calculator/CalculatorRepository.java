@@ -1,5 +1,7 @@
 package pl.symentis.calculator;
 
 public interface CalculatorRepository {
-    void saveCalculator(ObjectCalculator calculator);
+    void save(String name, ObjectCalculator calculator);
+
+    ObjectCalculator load(String name);
 }
