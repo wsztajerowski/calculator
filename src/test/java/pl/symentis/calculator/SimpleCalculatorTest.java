@@ -17,10 +17,27 @@ class SimpleCalculatorTest {
 
     @Test
     void add_one_to_three_returns_four(){
+        // when
+        int actual = sut.add(1, 3);
+
+        // then
+        assertEquals(4, actual);
     }
 
     @Test
     void throws_illegal_argument_exception_when_dividing_by_zero(){
+        // given
+        int firstDigit = 1;
+        int secondDigit = 0;
+
+        // when
+        Exception actual = assertThrows(RuntimeException.class, () -> sut.divide(firstDigit, secondDigit));
+
+        // then
+        assertAll("Division by zero exception",
+                () -> assertTrue(actual.getMessage().contains("by zero")),
+                () -> assertEquals(IllegalArgumentException.class, actual.getClass())
+        );
     }
 
 }
