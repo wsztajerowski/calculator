@@ -1,5 +1,7 @@
 package pl.symentis.calculator;
 
+import com.devskiller.jfairy.Fairy;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -7,8 +9,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.function.Supplier;
 import java.util.stream.Stream;
 
+import static java.util.stream.Stream.*;
+import static java.util.stream.Stream.concat;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -16,6 +21,12 @@ import static org.junit.jupiter.params.provider.Arguments.arguments;
 @IntegrationTest
 class ObjectCalculatorIT {
     private ObjectCalculator sut;
+    private static Fairy fairy;
+
+    @BeforeAll
+    static void beforeAll(){
+        fairy = Fairy.create();
+    }
 
     @Test
     void add_one_to_three_returns_four(){
@@ -50,7 +61,7 @@ class ObjectCalculatorIT {
             .hasNoCause();
     }
 
-    @ParameterizedTest(name = "Result of multiplication [{arguments}] is positive")
+    @ParameterizedTest(name = "[{index}]: Result of multiplication [{0} times {1}] is positive")
     @DisplayName(value = "Multiplication numbers with same sign returns positive result")
     @MethodSource("multiplicationElements")
     void multiplication_of_two_numbers_with_same_sign_returns_positive_number(int firstNumber, int secondNumber){
@@ -70,12 +81,22 @@ class ObjectCalculatorIT {
 
 
     static Stream<Arguments> multiplicationElements() {
-        return Stream.of(
-                arguments(-1, -3),
-                arguments(2, 4),
-                arguments(-1, -1),
-                arguments(3, 3),
-                arguments(20, 300)
+        Supplier<Integer> randomPositive = getIntegerSupplier(1, 1_000);
+        Supplier<Integer> randomNegative = getIntegerSupplier(-1_000, -1);
+        return concat(
+                createStream(randomPositive, 5),
+                createStream(randomNegative, 5)
         );
+    }
+
+    private static Stream<Arguments> createStream(Supplier<Integer> randomPositive, int limit) {
+        return generate(() -> arguments(randomPositive.get(), randomPositive.get()))
+                .limit(limit);
+    }
+
+    private static Supplier<Integer> getIntegerSupplier(int min, int max) {
+        return () -> fairy
+                .baseProducer()
+                .randomBetween(min, max);
     }
 }
