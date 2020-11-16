@@ -6,4 +6,9 @@ public class DefaultObjectCalculatorService implements ObjectCalculatorService {
     public DefaultObjectCalculatorService(CalculatorRepository repository) {
         calculatorRepository = repository;
     }
+
+    @Override
+    public ObjectCalculator load(String name) {
+        return null;
+    }
 }

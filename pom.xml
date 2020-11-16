@@ -47,6 +47,12 @@
             <artifactId>mockito-core</artifactId>
             <version>2.23.4</version>
         </dependency>
+        <dependency>
+            <groupId>com.devskiller</groupId>
+            <artifactId>jfairy</artifactId>
+            <version>0.6.4</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
