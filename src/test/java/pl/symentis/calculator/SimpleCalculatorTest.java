@@ -17,8 +17,12 @@ class SimpleCalculatorTest {
 
     @Test
     void add_one_to_three_returns_four(){
+        // given
+        int firstDigit = 1;
+        int secondDigit = 3;
+
         // when
-        int actual = sut.add(1, 3);
+        int actual = sut.add(firstDigit, secondDigit);
 
         // then
         assertEquals(4, actual);
