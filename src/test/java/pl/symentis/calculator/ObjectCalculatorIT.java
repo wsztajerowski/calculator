@@ -2,6 +2,7 @@ package pl.symentis.calculator;
 
 import com.devskiller.jfairy.Fairy;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,14 +29,19 @@ class ObjectCalculatorIT {
         fairy = Fairy.create();
     }
 
+    @BeforeEach
+    void beforeEach(){
+        sut = new ObjectCalculator();
+    }
+
     @Test
     void add_one_to_three_returns_four(){
         // given
-        sut = new ObjectCalculator();
+        sut
+                .init(1);
 
         // when
         int actual = sut
-                .init(1)
                 .add(3)
                 .getCurrentValue();
 
