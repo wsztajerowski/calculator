@@ -5,6 +5,8 @@ import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.DisplayNameGenerator.ReplaceUnderscores;
 import org.junit.jupiter.api.Test;
 
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 import static pl.symentis.calculator.ExtendedObjectCalculatorAssert.assertThat;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
@@ -15,7 +17,8 @@ class ObjectCalculatorServiceTest {
 
     @BeforeEach
     void beforeEach(){
-        calculatorRepository = new FakeCalculatorRepository();
+//        calculatorRepository = new FakeCalculatorRepository();
+        calculatorRepository = mock(CalculatorRepository.class);
         sut = new DefaultObjectCalculatorService(calculatorRepository);
     }
 
@@ -23,7 +26,9 @@ class ObjectCalculatorServiceTest {
     void load_calculator_returns_object_with_saved_value(){
         // given
         String name = "My results";
-        calculatorRepository.save(name, new ObjectCalculator(5));
+        ObjectCalculator calculator = new ObjectCalculator(5);
+//        calculatorRepository.save(name, calculator);
+        when(calculatorRepository.load(name)).thenReturn(calculator);
 
         // when
         ObjectCalculator savedCalculator = sut.load(name);
