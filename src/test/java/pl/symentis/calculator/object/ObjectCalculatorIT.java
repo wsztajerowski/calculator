@@ -1,4 +1,4 @@
-package pl.symentis.calculator;
+package pl.symentis.calculator.object;
 
 import com.devskiller.jfairy.Fairy;
 import org.junit.jupiter.api.BeforeAll;

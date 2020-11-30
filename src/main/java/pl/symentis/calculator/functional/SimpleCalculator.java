@@ -1,4 +1,4 @@
-package pl.symentis.calculator;
+package pl.symentis.calculator.functional;
 
 public class SimpleCalculator {
     public SimpleCalculator(){}

@@ -10,13 +10,14 @@ import static org.mockito.Mockito.when;
 import static pl.symentis.calculator.object.ExtendedObjectCalculatorAssert.assertThat;
 
 @DisplayNameGeneration(ReplaceUnderscores.class)
-class ObjectCalculatorServiceTest {
+class ObjectCalculatorServiceWithMocksTest {
 
     private ObjectCalculatorService sut;
     private CalculatorRepository calculatorRepository;
 
     @BeforeEach
     void beforeEach(){
+//        calculatorRepository = new FakeCalculatorRepository();
         calculatorRepository = mock(CalculatorRepository.class);
         sut = new DefaultObjectCalculatorService(calculatorRepository);
     }
@@ -26,6 +27,7 @@ class ObjectCalculatorServiceTest {
         // given
         String name = "My results";
         ObjectCalculator calculator = new ObjectCalculator(5);
+//        calculatorRepository.save(name, calculator);
         when(calculatorRepository.load(name)).thenReturn(calculator);
 
         // when

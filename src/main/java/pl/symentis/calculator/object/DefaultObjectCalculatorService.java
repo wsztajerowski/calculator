@@ -1,4 +1,4 @@
-package pl.symentis.calculator;
+package pl.symentis.calculator.object;
 
 public class DefaultObjectCalculatorService implements ObjectCalculatorService {
     private final CalculatorRepository calculatorRepository;
