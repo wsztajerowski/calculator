@@ -21,12 +21,12 @@ class SimpleCalculatorTest {
     private SimpleCalculator sut;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         sut = new SimpleCalculator();
     }
 
     @Test
-    void add_one_to_three_returns_four(){
+    void add_one_to_three_returns_four() {
         // given
         int firstDigit = 1;
         int secondDigit = 3;
@@ -39,7 +39,7 @@ class SimpleCalculatorTest {
     }
 
     @Test
-    void throws_illegal_argument_exception_when_dividing_by_zero(){
+    void throws_illegal_argument_exception_with_message_contains_by_zero_when_dividing_by_zero() {
         // given
         int firstDigit = 1;
         int secondDigit = 0;
@@ -49,14 +49,15 @@ class SimpleCalculatorTest {
 
         // then
         assertAll("Division by zero exception",
-                () -> assertTrue(actual.getMessage().contains("by zero")),
-                () -> assertEquals(IllegalArgumentException.class, actual.getClass())
+            () -> assertTrue(actual.getMessage()
+                .contains("by zero")),
+            () -> assertEquals(IllegalArgumentException.class, actual.getClass())
         );
     }
 
     @ParameterizedTest(name = "[{index}]: {0} times {1}")
     @MethodSource
-    void verify_commutative_property_of_multiplication(int factorA, int factorB){
+    void verify_commutative_property_of_multiplication(int factorA, int factorB) {
         // when
         int productAB = sut.multiply(factorA, factorB);
         // and
@@ -68,11 +69,11 @@ class SimpleCalculatorTest {
 
     private static Stream<Arguments> verify_commutative_property_of_multiplication() {
         return Stream.of(
-                arguments(-1, 3),
-                arguments(5, 4),
-                arguments(-10, 10),
-                arguments(2, 0),
-                arguments(0,0)
+            arguments(-1, 3),
+            arguments(5, 4),
+            arguments(-10, 10),
+            arguments(2, 0),
+            arguments(0, 0)
         );
     }
 

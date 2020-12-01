@@ -16,19 +16,18 @@ class ObjectCalculatorServiceWithMocksTest {
     private CalculatorRepository calculatorRepository;
 
     @BeforeEach
-    void beforeEach(){
-//        calculatorRepository = new FakeCalculatorRepository();
+    void beforeEach() {
         calculatorRepository = mock(CalculatorRepository.class);
         sut = new DefaultObjectCalculatorService(calculatorRepository);
     }
 
     @Test
-    void load_calculator_returns_object_with_saved_value(){
+    void load_calculator_returns_object_with_saved_value() {
         // given
         String name = "My results";
         ObjectCalculator calculator = new ObjectCalculator(5);
-//        calculatorRepository.save(name, calculator);
-        when(calculatorRepository.load(name)).thenReturn(calculator);
+        when(calculatorRepository.load(name))
+            .thenReturn(calculator);
 
         // when
         ObjectCalculator savedCalculator = sut.load(name);

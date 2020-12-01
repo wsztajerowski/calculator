@@ -25,35 +25,35 @@ class ObjectCalculatorIT {
     private static Fairy fairy;
 
     @BeforeAll
-    static void beforeAll(){
+    static void beforeAll() {
         fairy = Fairy.create();
     }
 
     @BeforeEach
-    void beforeEach(){
+    void beforeEach() {
         sut = new ObjectCalculator();
     }
 
     @Test
-    void add_one_to_three_returns_four(){
+    void add_one_to_three_returns_four() {
         // given
         sut
-                .init(1);
+            .init(1);
 
         // when
         int actual = sut
-                .add(3)
-                .getCurrentValue();
+            .add(3)
+            .getCurrentValue();
 
         // then
         assertThat(actual)
-                .isPositive()
-                .isEqualTo(4);
+            .isPositive()
+            .isEqualTo(4);
     }
 
     @ParameterizedTest(name = "Divide {0} by 0 throw an exception!")
     @ValueSource(ints = {-1, 0, 1, 4})
-    void throws_illegal_argument_exception_when_dividing_by_zero(int value){
+    void throws_illegal_argument_exception_when_dividing_by_zero(int value) {
         // given
         sut = new ObjectCalculator(value);
 
@@ -70,7 +70,7 @@ class ObjectCalculatorIT {
     @ParameterizedTest(name = "[{index}]: Result of multiplication [{0} times {1}] is positive")
     @DisplayName(value = "Multiplication numbers with same sign returns positive result")
     @MethodSource("multiplicationElements")
-    void multiplication_of_two_numbers_with_same_sign_returns_positive_number(int firstNumber, int secondNumber){
+    void multiplication_of_two_numbers_with_same_sign_returns_positive_number(int firstNumber, int secondNumber) {
         // given
         sut = new ObjectCalculator();
 
@@ -90,19 +90,16 @@ class ObjectCalculatorIT {
         Supplier<Integer> randomPositive = getIntegerSupplier(1, 1_000);
         Supplier<Integer> randomNegative = getIntegerSupplier(-1_000, -1);
         return concat(
-                createStream(randomPositive, 5),
-                createStream(randomNegative, 5)
+            generate(() -> arguments(randomPositive.get(), randomPositive.get()))
+                .limit(5),
+            generate(() -> arguments(randomNegative.get(), randomNegative.get()))
+                .limit(5)
         );
-    }
-
-    private static Stream<Arguments> createStream(Supplier<Integer> randomPositive, int limit) {
-        return generate(() -> arguments(randomPositive.get(), randomPositive.get()))
-                .limit(limit);
     }
 
     private static Supplier<Integer> getIntegerSupplier(int min, int max) {
         return () -> fairy
-                .baseProducer()
-                .randomBetween(min, max);
+            .baseProducer()
+            .randomBetween(min, max);
     }
 }
