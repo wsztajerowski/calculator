@@ -1,11 +1,7 @@
 package pl.symentis.calculator.object;
 
-import org.assertj.core.api.AbstractAssert;
-import org.assertj.core.api.Assertions;
-
-public class ExtendedObjectCalculatorAssert extends AbstractAssert<ExtendedObjectCalculatorAssert, ObjectCalculator> {
+public class ExtendedObjectCalculatorAssert {
     public ExtendedObjectCalculatorAssert(ObjectCalculator actual) {
-        super(actual, ExtendedObjectCalculatorAssert.class);
     }
 
     public static ExtendedObjectCalculatorAssert assertThat(ObjectCalculator actual) {
@@ -13,30 +9,21 @@ public class ExtendedObjectCalculatorAssert extends AbstractAssert<ExtendedObjec
     }
 
     public ExtendedObjectCalculatorAssert hasValueDifferentThan(int value) {
-        isNotNull();
-
-        if (actual.getCurrentValue() == value) {
-            failWithMessage("Expected calculator current value to be different than <%s> but was the same", value);
-        }
+        // remember that you have to verify if actual object is not null
+        // use if statement and failWithMessage method
 
         return this;
     }
 
     public ExtendedObjectCalculatorAssert hasPositiveValue() {
-        isNotNull();
+        // use core assertions for numbers with overridingErrorMessage
 
-        Assertions.assertThat(actual.getCurrentValue())
-                .overridingErrorMessage("Current value [%s] has to be a positive number!", actual.getCurrentValue())
-                .isPositive();
         return this;
     }
 
     public ExtendedObjectCalculatorAssert hasValue(int expectedValue) {
-        isNotNull();
+        // use core assertions and "as" method
 
-        Assertions.assertThat(actual.getCurrentValue())
-                .as("Checking calculator's value")
-                .isEqualTo(expectedValue);
         return this;
     }
 }

@@ -2,22 +2,12 @@ package pl.symentis.calculator.object;
 
 import com.devskiller.jfairy.Fairy;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.function.Supplier;
 import java.util.stream.Stream;
-
-import static java.util.stream.Stream.*;
-import static java.util.stream.Stream.concat;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 @IntegrationTest
 class ObjectCalculatorIT {
@@ -29,72 +19,34 @@ class ObjectCalculatorIT {
         fairy = Fairy.create();
     }
 
-    @BeforeEach
-    void beforeEach() {
-        sut = new ObjectCalculator();
-    }
-
     @Test
     void add_one_to_three_returns_four() {
-        // given
-        sut
-            .init(1);
-
-        // when
-        int actual = sut
-            .add(3)
-            .getCurrentValue();
-
-        // then
-        assertThat(actual)
-            .isPositive()
-            .isEqualTo(4);
+        // you can use ObjectCalculator#init method to set initial calculator state
+        // and ObjectCalculator#getCurrentValue to obtain current calculator's value
+        // also: use core AssertJ assertions to check if result is a positive number and equal to expected value
     }
 
-    @ParameterizedTest(name = "Divide {0} by 0 throw an exception!")
-    @ValueSource(ints = {-1, 0, 1, 4})
+    @ParameterizedTest
     void throws_illegal_argument_exception_when_dividing_by_zero(int value) {
-        // given
-        sut = new ObjectCalculator(value);
-
-        // when
-        Throwable thrown = catchThrowable(() -> sut.divideBy(0));
-
-        // then
-        assertThat(thrown)
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("by zero!")
-            .hasNoCause();
+        // set proper test's execution name
+        // try to use simplest possible source
+        // use catchThrowable method to capture the exception and verify if exception has proper type,
+        // has no cause and it's message contains string "by zero!"
     }
 
-    @ParameterizedTest(name = "[{index}]: Result of multiplication [{0} times {1}] is positive")
-    @DisplayName(value = "Multiplication numbers with same sign returns positive result")
-    @MethodSource("multiplicationElements")
+    @ParameterizedTest
     void multiplication_of_two_numbers_with_same_sign_returns_positive_number(int firstNumber, int secondNumber) {
-        // given
-        sut = new ObjectCalculator();
-
-        // when
-        ObjectCalculator actual = sut
-            .init(firstNumber)
-            .multiplyBy(secondNumber);
-
-        // then
-        ExtendedObjectCalculatorAssert.assertThat(actual)
-            .hasValueDifferentThan(0)
-            .hasPositiveValue();
+        // set display name and proper test's execution name
+        // use ExtendedObjectCalculatorAssert
     }
 
 
     static Stream<Arguments> multiplicationElements() {
         Supplier<Integer> randomPositive = getIntegerSupplier(1, 1_000);
         Supplier<Integer> randomNegative = getIntegerSupplier(-1_000, -1);
-        return concat(
-            generate(() -> arguments(randomPositive.get(), randomPositive.get()))
-                .limit(5),
-            generate(() -> arguments(randomNegative.get(), randomNegative.get()))
-                .limit(5)
-        );
+        // you can use Stream#concat and Stream#generate to create stream of number pairs with the same sign
+        Stream<Arguments> stream = null;
+        return stream;
     }
 
     private static Supplier<Integer> getIntegerSupplier(int min, int max) {
