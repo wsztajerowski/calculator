@@ -1,4 +1,4 @@
-package pl.symentis.calculator;
+package pl.symentis.calculator.object;
 
 public class DefaultObjectCalculatorService implements ObjectCalculatorService {
     private final CalculatorRepository calculatorRepository;
@@ -9,6 +9,7 @@ public class DefaultObjectCalculatorService implements ObjectCalculatorService {
 
     @Override
     public ObjectCalculator load(String name) {
-        return null;
+        return calculatorRepository
+                .load(name);
     }
 }

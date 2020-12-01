@@ -1,4 +1,7 @@
-package pl.symentis.calculator;
+package pl.symentis.calculator.object;
+
+import pl.symentis.calculator.object.CalculatorRepository;
+import pl.symentis.calculator.object.ObjectCalculator;
 
 import java.util.HashMap;
 import java.util.Map;
