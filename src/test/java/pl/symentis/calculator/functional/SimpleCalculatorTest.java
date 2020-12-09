@@ -27,7 +27,7 @@ class SimpleCalculatorTest {
 
     @ParameterizedTest
     void verify_commutative_property_of_multiplication(int factorA, int factorB) {
-        // commutation low: A + B = B + A
+        // commutation low: A * B = B * A
         // set proper test's execution name and utilize data provider method
     }
 
